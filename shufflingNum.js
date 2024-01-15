@@ -20,3 +20,5 @@ let shufflingNum = (e) => {
 
 console.log(shufflingNum([2, 1, 6, 7, 3, 4]));
 console.log(shufflingNum("230959"));
+
+//usage of random,concat,splice,type
