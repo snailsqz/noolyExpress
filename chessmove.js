@@ -4,8 +4,6 @@ function canMove(piece, from, to) {
   to = to.toUpperCase();
   piece = piece.toUpperCase();
   if (from == to) return false;
-  if (from[1] == to[1]) return false;
-  if (from[0] == to[0]) return false;
   if (
     parseInt(to[1]) > 8 ||
     parseInt(from[1]) > 8 ||
@@ -16,7 +14,6 @@ function canMove(piece, from, to) {
   if (piece == "KNIGHT") return canThisKnightMove(from, to);
   if (piece == "PAWN") return canThisPawnMove(from, to);
   if (piece == "ROOK") return canThisRookMove(from, to);
-
   return false;
 }
 function canThisPawnMove(from, to) {
@@ -32,7 +29,7 @@ function canThisPawnMove(from, to) {
   return false;
 }
 function canThisRookMove(from, to) {
-  if (piece == "ROOK") if (from[1] == to[1] || from[0] == to[0]) return true;
+  if (from[1] == to[1] || from[0] == to[0]) return true;
   return false;
 }
 function canThisKnightMove(from, to) {
@@ -74,9 +71,9 @@ function canThisKnightMove(from, to) {
   }
   return false;
 }
-// console.log(canMove("Rook", "a1", "C1")); //Rook valid move
-// console.log(canMove("Rook", "a1", "c8")); //Rook not valid move
-// console.log(canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
-// console.log(canMove("Pawn", "a2", "a3")); // Cant 2 sqre now
-
-console.log(canMove("KNIGHT", "h4", "f4"));
+console.log(canMove("Rook", "a1", "C1")); //Rook valid move
+console.log(canMove("Rook", "a1", "c8")); //Rook not valid move
+console.log(canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
+console.log(canMove("Pawn", "a2", "a4")); // Cant 2 sqre now
+console.log(canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
+console.log(canMove("KNIGHT", "h4", "f5")); //knight valid move
