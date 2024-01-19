@@ -1,4 +1,3 @@
-let pawnMoved = false;
 function canMove(piece, from, to) {
   from = from.toUpperCase();
   to = to.toUpperCase();
@@ -14,15 +13,15 @@ function canMove(piece, from, to) {
   if (piece == "KNIGHT") return canThisKnightMove(from, to);
   if (piece == "PAWN") return canThisPawnMove(from, to);
   if (piece == "ROOK") return canThisRookMove(from, to);
+  if (piece == "BISHOP") return canThisBishopMove(from, to);
   return false;
 }
 function canThisPawnMove(from, to) {
   if (
-    pawnMoved == false &&
+    parseInt(from[1]) == 2 &&
     from[0] == to[0] &&
     parseInt(from[1]) + 2 == to[1]
   ) {
-    pawnMoved = true;
     return true;
   }
   if (from[0] == to[0] && parseInt(from[1]) + 1 == parseInt(to[1])) return true;
@@ -33,17 +32,13 @@ function canThisRookMove(from, to) {
   return false;
 }
 function canThisKnightMove(from, to) {
-  from = from.toUpperCase();
-  to = to.toUpperCase();
-
   table = ["A", "B", "C", "D", "E", "F", "G", "H"];
-
-  if (from == to) return false;
 
   let status = 0;
   let indexStart = table.findIndex((e) => e == from[0]);
   let indexEnd = table.findIndex((e) => e == to[0]);
   if (indexStart == indexEnd) return false;
+
   for (let i = -2; i <= 2; i++)
     if (table[indexStart - i] == table[indexEnd]) status = 1; //check if element around indexStart each side +-2
 
@@ -71,9 +66,33 @@ function canThisKnightMove(from, to) {
   }
   return false;
 }
-console.log(canMove("Rook", "a1", "C1")); //Rook valid move
-console.log(canMove("Rook", "a1", "c8")); //Rook not valid move
-console.log(canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
-console.log(canMove("Pawn", "a2", "a4")); // Cant 2 sqre now
-console.log(canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
-console.log(canMove("KNIGHT", "h4", "f5")); //knight valid move
+function canThisBishopMove(from, to) {
+  table = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  let status = 0;
+  let indexStart = table.findIndex((e) => e == from[0]);
+  let indexEnd = table.findIndex((e) => e == to[0]);
+  if (indexStart == indexEnd) return false;
+  console.log(indexStart, indexEnd);
+  if (indexStart < indexEnd) {
+    let j = 0;
+    for (let i = indexStart; i < indexEnd + 1; i++) {
+      console.log(table[i] + (parseInt(from[1]) + j));
+      console.log(table[indexStart - j] + (parseInt(from[1]) - j));
+      j++;
+    }
+  } else {
+    let j = 0; // indexStart = 4 index End = 0
+    for (let i = indexEnd; i < indexStart + 1; i++) {
+      console.log(table[i] + (parseInt(to[1]) - j));
+      // console.log(table[indexStart - j] + (parseInt(from[1]) - j));
+      j++;
+    }
+  }
+}
+// console.log("Rook ", canMove("Rook", "a1", "C1")); //Rook valid move
+// console.log("Rook ", canMove("Rook", "a1", "c8")); //Rook not valid move
+// console.log("Pawn ", canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
+// console.log("Pawn ", canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
+// console.log("Pawn ", canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
+// console.log("Knight ", canMove("KNIGHT", "h4", "f5")); //knight valid move
+console.log("Bishop ", canMove("Bishop", "e3", "a7")); //knight valid move
