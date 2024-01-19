@@ -73,21 +73,29 @@ function canThisBishopMove(from, to) {
   let indexEnd = table.findIndex((e) => e == to[0]);
   if (indexStart == indexEnd) return false;
   console.log(indexStart, indexEnd);
-  if (indexStart < indexEnd) {
-    let j = 0;
-    for (let i = indexStart; i < indexEnd + 1; i++) {
-      console.log(table[i] + (parseInt(from[1]) + j));
-      console.log(table[indexStart - j] + (parseInt(from[1]) - j));
-      j++;
+  let checker = [];
+
+  let j = 1;
+  for (let i = indexStart; i < 9; i++) {
+    //console.log(table[indexStart - j] + (parseInt(from[1]) - j));
+    //console.log(table[indexStart - j] + (parseInt(from[1]) + j));
+    //console.log(table[indexStart + j] + (parseInt(from[1]) - j));
+    //console.log(table[indexStart + j] + (parseInt(from[1]) + j));
+    if (parseInt(from[1]) - j != NaN && parseInt(from[1]) - j > 0) {
+      checker.push(
+        table[indexStart - j] + (parseInt(from[1]) - j),
+        table[indexStart + j] + (parseInt(from[1]) - j)
+      );
     }
-  } else {
-    let j = 0; // indexStart = 4 index End = 0
-    for (let i = indexEnd; i < indexStart + 1; i++) {
-      console.log(table[i] + (parseInt(to[1]) - j));
-      // console.log(table[indexStart - j] + (parseInt(from[1]) - j));
-      j++;
+    if (parseInt(from[1]) + j != NaN && parseInt(from[1]) + j < 9) {
+      checker.push(
+        //table[indexStart - j] + (parseInt(from[1]) + j),
+        table[indexStart + j] + (parseInt(from[1]) + j)
+      );
     }
+    j++;
   }
+  console.log(checker);
 }
 // console.log("Rook ", canMove("Rook", "a1", "C1")); //Rook valid move
 // console.log("Rook ", canMove("Rook", "a1", "c8")); //Rook not valid move
@@ -95,4 +103,4 @@ function canThisBishopMove(from, to) {
 // console.log("Pawn ", canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
 // console.log("Pawn ", canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
 // console.log("Knight ", canMove("KNIGHT", "h4", "f5")); //knight valid move
-console.log("Bishop ", canMove("Bishop", "e3", "a7")); //knight valid move
+console.log("Bishop ", canMove("Bishop", "a1", "h8")); //knight valid move
