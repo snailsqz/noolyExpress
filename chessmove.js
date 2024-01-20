@@ -1,13 +1,5 @@
-var ChsTable = [
-  ["-", "-", "-", "-", "-", "-", "-", "-"],
-  ["-", "-", "-", "-", "-", "-", "-", "-"],
-  ["-", "-", "-", "-", "-", "-", "-", "-"],
-  ["-", "-", "-", "-", "-", "-", "-", "-"],
-  ["-", "-", "-", "-", "-", "-", "-", "-"],
-  ["-", "-", "-", "-", "-", "-", "-", "-"],
-  ["-", "-", "-", "-", "-", "-", "-", "-"],
-  ["-", "-", "-", "-", "-", "-", "-", "-"],
-];
+const fs = require("fs");
+let ChsTable = JSON.parse(fs.readFileSync("ctb.json"));
 function canMove(piece, from, to) {
   from = from.toUpperCase();
   to = to.toUpperCase();
@@ -35,22 +27,8 @@ function canMove(piece, from, to) {
 
   return `${piece} : from ${from} to ${to} = Can't Play`;
 }
-function ChessTable(piece, from) {
-  from = from.toUpperCase();
-  piece = piece.toUpperCase();
-  if (piece != "PAWN") return false;
-  if (piece != "ROOK") return false;
-  if (piece != "KNIGHT") return false;
-  if (piece != "BISHOP") return false;
-  if (piece != "QUEEN") return false;
-  if (piece != "KING") return false;
-  let row = ["A", "B", "C", "D", "E", "F", "G", "H"];
-  let indexStart = row.findIndex((e) => e == from[0]);
-
-  ChsTable[8 - parseInt(from[1])][indexStart] = piece[0];
-
+function ShowDisplay() {
   let op = "";
-
   console.log("\n");
   for (let i = 0; i < ChsTable.length; i++) {
     op += 8 - i + " : ";
@@ -61,6 +39,21 @@ function ChessTable(piece, from) {
   }
   op += "Col:ABCDEFGH";
   return op;
+}
+function ChessTable(piece, from) {
+  from = from.toUpperCase();
+  piece = piece.toUpperCase();
+  // if (piece != "PAWN") return false;
+  // if (piece != "ROOK") return false;
+  // if (piece != "KNIGHT") return false;
+  // if (piece != "BISHOP") return false;
+  // if (piece != "QUEEN") return false;
+  // if (piece != "KING") return false;
+  let row = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  let indexStart = row.findIndex((e) => e == from[0]);
+  ChsTable[8 - parseInt(from[1])][indexStart] = piece[0];
+  fs.writeFileSync("ctb.json", JSON.stringify(ChsTable));
+  return ShowDisplay();
 }
 function canThisPawnMove(from, to) {
   if (
@@ -225,14 +218,15 @@ function canThisKingMove(from, to) {
 // console.log(canMove("King", "d3", "f3")); //King invalid move
 
 let row = ["A", "B", "C", "D", "E", "F", "G", "H"];
-for (let i = 0; i < 8; i++) {
-  ChessTable("Pawn", row[i] + 2);
-}
-ChessTable("Rook", "a1");
-ChessTable("Rook", "h1");
-ChessTable("Knight", "b1");
-ChessTable("Knight", "g1");
-ChessTable("Bishop", "c1");
-ChessTable("Bishop", "f1");
-ChessTable("Queen", "d1");
-console.log(ChessTable("King", "e1"));
+// for (let i = 0; i < 8; i++) {
+//   ChessTable("Pawn", row[i] + 2);
+// }
+// ChessTable("Rook", "a1");
+// ChessTable("Rook", "h1");
+// ChessTable("Night", "b1");
+// ChessTable("Night", "g1");
+// ChessTable("Bishop", "c1");
+// ChessTable("Bishop", "f1");
+// ChessTable("Queen", "d1");
+// console.log(ChessTable("Queen", "d3"));
+console.log(ShowDisplay());
