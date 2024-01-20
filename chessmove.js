@@ -2,25 +2,28 @@ function canMove(piece, from, to) {
   from = from.toUpperCase();
   to = to.toUpperCase();
   piece = piece.toUpperCase();
-  if (from == to) return false;
+  if (from == to) return `${piece} : from ${from} to ${to} = Can't Play`;
   if (
     parseInt(to[1]) > 8 ||
     parseInt(from[1]) > 8 ||
     parseInt(to[1]) < 1 ||
     parseInt(from[1]) < 1
   )
-    return false;
-  if (piece == "KNIGHT")
-    return `${piece} : from ${from} to ${to} = ${canThisKnightMove(from, to)}`;
+    return `${piece} : from ${from} to ${to} = Can't Play`;
   if (piece == "PAWN")
     return `${piece} : from ${from} to ${to} = ${canThisPawnMove(from, to)}`;
   if (piece == "ROOK")
     return `${piece} : from ${from} to ${to} = ${canThisRookMove(from, to)}`;
+  if (piece == "KNIGHT")
+    return `${piece} : from ${from} to ${to} = ${canThisKnightMove(from, to)}`;
   if (piece == "BISHOP")
     return `${piece} : from ${from} to ${to} = ${canThisBishopMove(from, to)}`;
   if (piece == "QUEEN")
     return `${piece} : from ${from} to ${to} = ${canThisQueenMove(from, to)}`;
-  return false;
+  if (piece == "KING")
+    return `${piece} : from ${from} to ${to} = ${canThisKingMove(from, to)}`;
+
+  return `${piece} : from ${from} to ${to} = Can't Play`;
 }
 function canThisPawnMove(from, to) {
   if (
@@ -113,7 +116,6 @@ function canThisBishopMove(from, to) {
   }
   return false;
 }
-
 function canThisQueenMove(from, to) {
   if (from[1] == to[1] || from[0] == to[0]) return true;
   table = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -156,6 +158,22 @@ function canThisQueenMove(from, to) {
   }
   return false;
 }
+
+function canThisKingMove(from, to) {
+  table = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  let indexStart = table.findIndex((e) => e == from[0]);
+  let indexEnd = table.findIndex((e) => e == to[0]);
+
+  for (let i = -1; i <= 1; i++)
+    if (
+      indexStart - i == indexEnd &&
+      parseInt(from[1]) - parseInt(to[1]) > -2 &&
+      parseInt(from[1]) - parseInt(to[1]) < 3
+    )
+      return true;
+
+  return false;
+}
 console.log(canMove("Rook", "a1", "C1")); //Rook valid move
 console.log(canMove("Rook", "a1", "c8")); //Rook invalid move
 console.log(canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
@@ -167,3 +185,5 @@ console.log(canMove("Bishop", "e4", "h1")); //Bishop valid move
 console.log(canMove("Bishop", "e4", "h2")); //Bishop invalid move
 console.log(canMove("Queen", "d5", "h1")); //Queen valid move
 console.log(canMove("Queen", "d5", "c3")); //Queen invalid move
+console.log(canMove("King", "f3", "g3")); //King valid move
+console.log(canMove("King", "d3", "f3")); //King invalid move
