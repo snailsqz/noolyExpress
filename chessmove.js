@@ -68,54 +68,49 @@ function canThisKnightMove(from, to) {
 }
 function canThisBishopMove(from, to) {
   table = ["A", "B", "C", "D", "E", "F", "G", "H"];
-  let status = 0;
+
   let indexStart = table.findIndex((e) => e == from[0]);
   let indexEnd = table.findIndex((e) => e == to[0]);
   if (indexStart == indexEnd) return false;
-  let checker = [];
-  console.log(indexStart, indexEnd);
-
   let j = 1;
-
   if (indexStart < indexEnd)
     for (let i = indexStart; i < 9; i++) {
       if (table[indexStart - j] != undefined && parseInt(from[1]) - j > 0)
-        checker.push(table[indexStart - j] + (parseInt(from[1]) - j));
+        if (table[indexStart - j] + (parseInt(from[1]) - j) == to) return true;
 
       if (table[indexStart + j] != undefined && parseInt(from[1]) - j > 0)
-        checker.push(table[indexStart + j] + (parseInt(from[1]) - j));
+        if (table[indexStart + j] + (parseInt(from[1]) - j) == to) return true;
 
       if (table[indexStart - j] != undefined && parseInt(from[1]) + j < 9)
-        checker.push(table[indexStart - j] + (parseInt(from[1]) + j));
+        if (table[indexStart - j] + (parseInt(from[1]) - j) == to) return true;
 
       if (table[indexStart + j] != undefined && parseInt(from[1]) + j < 9)
-        checker.push(table[indexStart + j] + (parseInt(from[1]) + j));
+        if (table[indexStart + j] + (parseInt(from[1]) + j) == to) return true;
 
       j++;
     }
   else {
     for (let i = indexStart; i > 0; i--) {
       if (table[indexStart - j] != undefined && parseInt(from[1]) - j > 0)
-        checker.push(table[indexStart - j] + (parseInt(from[1]) - j));
+        if (table[indexStart - j] + (parseInt(from[1]) - j) == to) return true;
 
       if (table[indexStart + j] != undefined && parseInt(from[1]) - j > 0)
-        checker.push(table[indexStart + j] + (parseInt(from[1]) - j));
+        if (table[indexStart + j] + (parseInt(from[1]) - j) == to) return true;
 
       if (table[indexStart - j] != undefined && parseInt(from[1]) + j < 9)
-        checker.push(table[indexStart - j] + (parseInt(from[1]) + j));
+        if (table[indexStart - j] + (parseInt(from[1]) - j) == to) return true;
 
       if (table[indexStart + j] != undefined && parseInt(from[1]) + j < 9)
-        checker.push(table[indexStart + j] + (parseInt(from[1]) + j));
-
+        if (table[indexStart + j] + (parseInt(from[1]) + j) == to) return true;
       j++;
     }
   }
-  console.log(checker);
+  return false;
 }
-// console.log("Rook ", canMove("Rook", "a1", "C1")); //Rook valid move
-// console.log("Rook ", canMove("Rook", "a1", "c8")); //Rook not valid move
-// console.log("Pawn ", canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
-// console.log("Pawn ", canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
-// console.log("Pawn ", canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
-// console.log("Knight ", canMove("KNIGHT", "h4", "f5")); //knight valid move
-console.log("Bishop ", canMove("Bishop", "g8", "a1")); //knight valid move
+console.log("Rook : a1 to c1 is", canMove("Rook", "a1", "C1")); //Rook valid move
+console.log("Rook : a1 to c8 is", canMove("Rook", "a1", "c8")); //Rook not valid move
+console.log("Pawn : d2 to d4 is", canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
+console.log("Pawn : a3 to a5 is", canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
+console.log("Pawn : a2 to a3 is", canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
+console.log("Knight : h4 to f5 is", canMove("Knight", "h4", "f5")); //knight valid move
+console.log("Bishop : e4 to h1 is", canMove("Bishop", "e4", "h1")); //Bishop valid move
