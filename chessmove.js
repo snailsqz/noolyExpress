@@ -10,10 +10,16 @@ function canMove(piece, from, to) {
     parseInt(from[1]) < 1
   )
     return false;
-  if (piece == "KNIGHT") return canThisKnightMove(from, to);
-  if (piece == "PAWN") return canThisPawnMove(from, to);
-  if (piece == "ROOK") return canThisRookMove(from, to);
-  if (piece == "BISHOP") return canThisBishopMove(from, to);
+  if (piece == "KNIGHT")
+    return `${piece} : from ${from} to ${to} = ${canThisKnightMove(from, to)}`;
+  if (piece == "PAWN")
+    return `${piece} : from ${from} to ${to} = ${canThisPawnMove(from, to)}`;
+  if (piece == "ROOK")
+    return `${piece} : from ${from} to ${to} = ${canThisRookMove(from, to)}`;
+  if (piece == "BISHOP")
+    return `${piece} : from ${from} to ${to} = ${canThisBishopMove(from, to)}`;
+  if (piece == "QUEEN")
+    return `${piece} : from ${from} to ${to} = ${canThisQueenMove(from, to)}`;
   return false;
 }
 function canThisPawnMove(from, to) {
@@ -107,10 +113,57 @@ function canThisBishopMove(from, to) {
   }
   return false;
 }
-console.log("Rook : a1 to c1 is", canMove("Rook", "a1", "C1")); //Rook valid move
-console.log("Rook : a1 to c8 is", canMove("Rook", "a1", "c8")); //Rook not valid move
-console.log("Pawn : d2 to d4 is", canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
-console.log("Pawn : a3 to a5 is", canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
-console.log("Pawn : a2 to a3 is", canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
-console.log("Knight : h4 to f5 is", canMove("Knight", "h4", "f5")); //knight valid move
-console.log("Bishop : e4 to h1 is", canMove("Bishop", "e4", "h1")); //Bishop valid move
+
+function canThisQueenMove(from, to) {
+  if (from[1] == to[1] || from[0] == to[0]) return true;
+  table = ["A", "B", "C", "D", "E", "F", "G", "H"];
+
+  let indexStart = table.findIndex((e) => e == from[0]);
+  let indexEnd = table.findIndex((e) => e == to[0]);
+  if (indexStart == indexEnd) return false;
+  let j = 1;
+  if (indexStart < indexEnd)
+    for (let i = indexStart; i < 9; i++) {
+      if (table[indexStart - j] != undefined && parseInt(from[1]) - j > 0)
+        if (table[indexStart - j] + (parseInt(from[1]) - j) == to) return true;
+
+      if (table[indexStart + j] != undefined && parseInt(from[1]) - j > 0)
+        if (table[indexStart + j] + (parseInt(from[1]) - j) == to) return true;
+
+      if (table[indexStart - j] != undefined && parseInt(from[1]) + j < 9)
+        if (table[indexStart - j] + (parseInt(from[1]) - j) == to) return true;
+
+      if (table[indexStart + j] != undefined && parseInt(from[1]) + j < 9)
+        if (table[indexStart + j] + (parseInt(from[1]) + j) == to) return true;
+
+      j++;
+    }
+  else {
+    for (let i = indexStart; i > 0; i--) {
+      if (table[indexStart - j] != undefined && parseInt(from[1]) - j > 0)
+        if (table[indexStart - j] + (parseInt(from[1]) - j) == to) return true;
+
+      if (table[indexStart + j] != undefined && parseInt(from[1]) - j > 0)
+        if (table[indexStart + j] + (parseInt(from[1]) - j) == to) return true;
+
+      if (table[indexStart - j] != undefined && parseInt(from[1]) + j < 9)
+        if (table[indexStart - j] + (parseInt(from[1]) - j) == to) return true;
+
+      if (table[indexStart + j] != undefined && parseInt(from[1]) + j < 9)
+        if (table[indexStart + j] + (parseInt(from[1]) + j) == to) return true;
+      j++;
+    }
+  }
+  return false;
+}
+console.log(canMove("Rook", "a1", "C1")); //Rook valid move
+console.log(canMove("Rook", "a1", "c8")); //Rook invalid move
+console.log(canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
+console.log(canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
+console.log(canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
+console.log(canMove("Knight", "e4", "d2")); //knight valid move
+console.log(canMove("Knight", "e4", "d1")); //knight invalid move
+console.log(canMove("Bishop", "e4", "h1")); //Bishop valid move
+console.log(canMove("Bishop", "e4", "h2")); //Bishop invalid move
+console.log(canMove("Queen", "d5", "h1")); //Queen valid move
+console.log(canMove("Queen", "d5", "c3")); //Queen invalid move
