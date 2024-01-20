@@ -15,10 +15,11 @@ let shufflingNum = (e) => {
     nums.splice(nums.indexOf(nums[randomNum]), 1);
   }
 
-  return trop;
+  return `from ${e} to ${trop}`;
 };
 
 console.log(shufflingNum([2, 1, 6, 7, 3, 4]));
 console.log(shufflingNum("230959"));
-
+console.log(shufflingNum("270547"));
+console.log(shufflingNum("170746"));
 //usage of random,concat,splice,type

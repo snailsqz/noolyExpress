@@ -158,7 +158,6 @@ function canThisQueenMove(from, to) {
   }
   return false;
 }
-
 function canThisKingMove(from, to) {
   table = ["A", "B", "C", "D", "E", "F", "G", "H"];
   let indexStart = table.findIndex((e) => e == from[0]);
