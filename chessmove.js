@@ -72,28 +72,43 @@ function canThisBishopMove(from, to) {
   let indexStart = table.findIndex((e) => e == from[0]);
   let indexEnd = table.findIndex((e) => e == to[0]);
   if (indexStart == indexEnd) return false;
-  console.log(indexStart, indexEnd);
   let checker = [];
+  console.log(indexStart, indexEnd);
 
   let j = 1;
-  for (let i = indexStart; i < 9; i++) {
-    //console.log(table[indexStart - j] + (parseInt(from[1]) - j));
-    //console.log(table[indexStart - j] + (parseInt(from[1]) + j));
-    //console.log(table[indexStart + j] + (parseInt(from[1]) - j));
-    //console.log(table[indexStart + j] + (parseInt(from[1]) + j));
-    if (parseInt(from[1]) - j != NaN && parseInt(from[1]) - j > 0) {
-      checker.push(
-        table[indexStart - j] + (parseInt(from[1]) - j),
-        table[indexStart + j] + (parseInt(from[1]) - j)
-      );
+
+  if (indexStart < indexEnd)
+    for (let i = indexStart; i < 9; i++) {
+      if (table[indexStart - j] != undefined && parseInt(from[1]) - j > 0)
+        checker.push(table[indexStart - j] + (parseInt(from[1]) - j));
+
+      if (table[indexStart + j] != undefined && parseInt(from[1]) - j > 0)
+        checker.push(table[indexStart + j] + (parseInt(from[1]) - j));
+
+      if (table[indexStart - j] != undefined && parseInt(from[1]) + j < 9)
+        checker.push(table[indexStart - j] + (parseInt(from[1]) + j));
+
+      if (table[indexStart + j] != undefined && parseInt(from[1]) + j < 9)
+        checker.push(table[indexStart + j] + (parseInt(from[1]) + j));
+
+      j++;
     }
-    if (parseInt(from[1]) + j != NaN && parseInt(from[1]) + j < 9) {
-      checker.push(
-        //table[indexStart - j] + (parseInt(from[1]) + j),
-        table[indexStart + j] + (parseInt(from[1]) + j)
-      );
+  else {
+    for (let i = indexStart; i > 0; i--) {
+      if (table[indexStart - j] != undefined && parseInt(from[1]) - j > 0)
+        checker.push(table[indexStart - j] + (parseInt(from[1]) - j));
+
+      if (table[indexStart + j] != undefined && parseInt(from[1]) - j > 0)
+        checker.push(table[indexStart + j] + (parseInt(from[1]) - j));
+
+      if (table[indexStart - j] != undefined && parseInt(from[1]) + j < 9)
+        checker.push(table[indexStart - j] + (parseInt(from[1]) + j));
+
+      if (table[indexStart + j] != undefined && parseInt(from[1]) + j < 9)
+        checker.push(table[indexStart + j] + (parseInt(from[1]) + j));
+
+      j++;
     }
-    j++;
   }
   console.log(checker);
 }
@@ -103,4 +118,4 @@ function canThisBishopMove(from, to) {
 // console.log("Pawn ", canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
 // console.log("Pawn ", canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
 // console.log("Knight ", canMove("KNIGHT", "h4", "f5")); //knight valid move
-console.log("Bishop ", canMove("Bishop", "a1", "h8")); //knight valid move
+console.log("Bishop ", canMove("Bishop", "g8", "a1")); //knight valid move
