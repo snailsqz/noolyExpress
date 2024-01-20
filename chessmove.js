@@ -1,3 +1,13 @@
+var ChsTable = [
+  ["-", "-", "-", "-", "-", "-", "-", "-"],
+  ["-", "-", "-", "-", "-", "-", "-", "-"],
+  ["-", "-", "-", "-", "-", "-", "-", "-"],
+  ["-", "-", "-", "-", "-", "-", "-", "-"],
+  ["-", "-", "-", "-", "-", "-", "-", "-"],
+  ["-", "-", "-", "-", "-", "-", "-", "-"],
+  ["-", "-", "-", "-", "-", "-", "-", "-"],
+  ["-", "-", "-", "-", "-", "-", "-", "-"],
+];
 function canMove(piece, from, to) {
   from = from.toUpperCase();
   to = to.toUpperCase();
@@ -24,6 +34,33 @@ function canMove(piece, from, to) {
     return `${piece} : from ${from} to ${to} = ${canThisKingMove(from, to)}`;
 
   return `${piece} : from ${from} to ${to} = Can't Play`;
+}
+function ChessTable(piece, from) {
+  from = from.toUpperCase();
+  piece = piece.toUpperCase();
+  if (piece != "PAWN") return false;
+  if (piece != "ROOK") return false;
+  if (piece != "KNIGHT") return false;
+  if (piece != "BISHOP") return false;
+  if (piece != "QUEEN") return false;
+  if (piece != "KING") return false;
+  let row = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  let indexStart = row.findIndex((e) => e == from[0]);
+
+  ChsTable[8 - parseInt(from[1])][indexStart] = piece[0];
+
+  let op = "";
+
+  console.log("\n");
+  for (let i = 0; i < ChsTable.length; i++) {
+    op += 8 - i + " : ";
+    for (let j = 0; j < ChsTable[i].length; j++) {
+      op += ChsTable[i][j];
+    }
+    op += "\n";
+  }
+  op += "Col:ABCDEFGH";
+  return op;
 }
 function canThisPawnMove(from, to) {
   if (
@@ -173,16 +210,29 @@ function canThisKingMove(from, to) {
 
   return false;
 }
-console.log(canMove("Rook", "a1", "C1")); //Rook valid move
-console.log(canMove("Rook", "a1", "c8")); //Rook invalid move
-console.log(canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
-console.log(canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
-console.log(canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
-console.log(canMove("Knight", "e4", "d2")); //knight valid move
-console.log(canMove("Knight", "e4", "d1")); //knight invalid move
-console.log(canMove("Bishop", "e4", "h1")); //Bishop valid move
-console.log(canMove("Bishop", "e4", "h2")); //Bishop invalid move
-console.log(canMove("Queen", "d5", "h1")); //Queen valid move
-console.log(canMove("Queen", "d5", "c3")); //Queen invalid move
-console.log(canMove("King", "f3", "g3")); //King valid move
-console.log(canMove("King", "d3", "f3")); //King invalid move
+// console.log(canMove("Rook", "a1", "C1")); //Rook valid move
+// console.log(canMove("Rook", "a1", "c8")); //Rook invalid move
+// console.log(canMove("Pawn", "d2", "d4")); //Pawn 2 sqre move
+// console.log(canMove("Pawn", "a3", "a5")); // Cant 2 sqre now
+// console.log(canMove("Pawn", "a2", "a3")); // But you can move just 1 sqre
+// console.log(canMove("Knight", "e4", "d2")); //knight valid move
+// console.log(canMove("Knight", "e4", "d1")); //knight invalid move
+// console.log(canMove("Bishop", "e4", "h1")); //Bishop valid move
+// console.log(canMove("Bishop", "e4", "h2")); //Bishop invalid move
+// console.log(canMove("Queen", "d5", "h1")); //Queen valid move
+// console.log(canMove("Queen", "d5", "c3")); //Queen invalid move
+// console.log(canMove("King", "f3", "g3")); //King valid move
+// console.log(canMove("King", "d3", "f3")); //King invalid move
+
+let row = ["A", "B", "C", "D", "E", "F", "G", "H"];
+for (let i = 0; i < 8; i++) {
+  ChessTable("Pawn", row[i] + 2);
+}
+ChessTable("Rook", "a1");
+ChessTable("Rook", "h1");
+ChessTable("Knight", "b1");
+ChessTable("Knight", "g1");
+ChessTable("Bishop", "c1");
+ChessTable("Bishop", "f1");
+ChessTable("Queen", "d1");
+console.log(ChessTable("King", "e1"));
